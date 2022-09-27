@@ -1,0 +1,48 @@
+# Single-cell RNA-sequencing
+
+Three independent replicates were generated for each condition (wild-type, PAR2 G37I mutant), in each cell type (macrophages & DCs, CD8/CD4 T cells).  
+All samples were sequenced on an Illumina NextSeq 500 device, with the NextSeq 500/550 High Output Kit v2 (Ilumina, San Diego, CA; 150 cycles; read1 26 cycles, read 2 98 cycles, i7 index 8 cycles).  
+Single cells were captured in droplet emulsions using the GemCode Single-Cell Instrument (10x Genomics, chemistry: Single Cell 3' v3).  
+Sequences from the microfluidic droplet platform were demultiplexed and aligned using CellRanger version 3.0.2, available from 10x Genomics with default parameters (using mm10 as reference genome).  
+Single-cell sequences were identified by detecting deviations from the expression profile of the ambient solution, using the function `emptyDrops` from the `DropletUtils` package.  
+The dataset was annotated to gene-level information based on ENSEMBL v92. Quality control was per- formed on each dataset independently to remove poor-quality cells, using the `scater` package (McCarthy et al., 2017). 
+The proportion of mitochondrial gene content was used as a proxy for damaged cells, using three median absolute deviations as a threshold. Low number of reads per cell, low number of detected genes, and high percentage of mitochondrial gene content were used as criteria for filtering, as suggested in the OSCA online resource (https://osca.bioconductor.org).  
+Normalization of cell-specific biases was performed on the remaining sets of cells using the deconvolution method of Lun et al., 2016 implemented in the `scran` package.  
+Counts were divided by size factors to obtain normalized expression values that were log-transformed after adding a pseudocount of one.  
+Data integration across different samples, split by cell type of origin, was performed with the `fastMNN` function, implementing the mutual nearest neighbors method proposed by Haghverdi et al., 2018.  
+Highly variable genes were identified on the pooled set of cells after modeling the technical noise as Poisson-distributed, and were provided as input for the MNN-based integration.  
+The results of the MNN integration were then provided as initialization to the t-SNE algorithm (Van der Maaten et al., 2008) to obtain a reduced dimensionality representation of the data.  
+To identify clusters of cells, we built a shared nearest neighbor graph (Xu et al., 2015) and used the louvain community finding algorithm with default resolution.  
+Automated cell type annotation was performed with the `SingleR` package, matching the generated expression profiles against the data provided by the `ImmGen` database, as provided via the `celldex` package.
+Additionally, we identified marker genes for each cluster using the function `findMarkers` from the `scran` package, which performs Welch t-tests on the log expression values for every gene and between every pair of clusters.  
+All visualizations were generated with the `iSEE` package (Rue-Albrecht et al., 2018), which was also utilized to construct the deployed instances of an interactive expression browser, providing as input the merged TAMs dataset (including wild-type and PAR2 G37I mutants) and the merged TILs dataset, respectively.  
+
+
+# Data availability
+
+All sequencing datasets generated for this study have been deposited on the [] database under accession code [], where readers can retrieve raw scRNA-seq data (from the bam files output by the Cellranger software), as well as count matrices (stored in the sparse matrix format).  
+The dataset can also be explored by downloading the RDS files and using `iSEE` as an interactive web-based application, implemented with Shiny.  
+Deployed instances for the datasets generated in this work are available at [] [], respectively.
+
+## Using `iSEE` locally
+
+The datasets can be also explored locally via `iSEE`, following the instructions in the following chunk.
+
+```{r}
+# install Bioconductor and iSEE
+install.packages("BiocManager")
+BiocManager::install("iSEE")
+
+# load the iSEE package and the datasets into the R session
+library("iSEE")
+sce_TAMs <- readRDS("path/to/sce_TAMs.rds")
+sce_TILs <- readRDS("path/to/sce_TILs.rds")
+
+# start the iSEE app
+iSEE(sce_TAMs)
+iSEE(sce_TILs)
+```
+
+GEO
+iSEE
+
