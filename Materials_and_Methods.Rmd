@@ -20,9 +20,9 @@ All visualizations were generated with the `iSEE` package (Rue-Albrecht et al., 
 
 # Data availability
 
-All sequencing datasets generated for this study have been deposited on the [] database under accession code [], where readers can retrieve raw scRNA-seq data (from the bam files output by the Cellranger software), as well as count matrices (stored in the sparse matrix format).  
+All sequencing datasets generated for this study have been deposited on the GEO database under accession code GSE214518 (https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE214518), where readers can retrieve raw scRNA-seq data (from the bam files output by the Cellranger software), as well as count matrices (stored in the sparse matrix format).  
 The dataset can also be explored by downloading the RDS files and using `iSEE` as an interactive web-based application, implemented with Shiny.  
-Deployed instances for the datasets generated in this work are available at [] [], respectively.
+Deployed instances for the datasets generated in this work are available at and http://shiny.imbei.uni-mainz.de:3838/iSEE_PAR2_TAMs/ and http://shiny.imbei.uni-mainz.de:3838/iSEE_PAR2_TILs/, respectively.
 
 ## Using `iSEE` locally
 
@@ -42,7 +42,4 @@ sce_TILs <- readRDS("path/to/sce_TILs.rds")
 iSEE(sce_TAMs)
 iSEE(sce_TILs)
 ```
-
-GEO
-iSEE
 
