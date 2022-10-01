@@ -2,7 +2,7 @@
 
 This repository contains the Materials and Methods in detail for the manuscript "Myeloid cell coagulation factor Xa-protease activated receptor 2 signaling inhibition expands progenitor exhausted T-cells in the tumor microenvironment", by Graf et al., 2022.
 
-Link to GEO: []
+Link to GEO: [GSE214518](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE214518)
 
 ## iSEE TAMs and TILs
 
